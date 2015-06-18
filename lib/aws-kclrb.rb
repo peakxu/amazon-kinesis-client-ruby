@@ -12,5 +12,8 @@
 #  express or implied. See the License for the specific language governing
 #  permissions and limitations under the License.
 
-require_relative 'kclrb/record_processor'
-require_relative 'kclrb/kcl_process'
+require 'aws-kclrb/checkpointer'
+require 'aws-kclrb/io_proxy'
+require 'aws-kclrb/kcl_process'
+require 'aws-kclrb/producer'
+require 'aws-kclrb/record_processor'

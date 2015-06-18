@@ -12,8 +12,6 @@
 #  express or implied. See the License for the specific language governing
 #  permissions and limitations under the License.
 
-require_relative 'io_proxy'
-
 module Aws
   module KCLrb
     # Error class used for wrapping exception names passed through the

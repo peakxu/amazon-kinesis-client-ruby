@@ -1,12 +1,12 @@
 #
 #  Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# 
+#
 #  Licensed under the Amazon Software License (the "License").
 #  You may not use this file except in compliance with the License.
 #  A copy of the License is located at
-# 
+#
 #  http://aws.amazon.com/asl/
-# 
+#
 #  or in the "license" file accompanying this file. This file is distributed
 #  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 #  express or implied. See the License for the specific language governing
@@ -18,7 +18,7 @@ require 'multi_json'
 module Aws
   module KCLrb
     # @api private
-    # Internal class used by {KCLProcess} and {Checkpointer} to communicate 
+    # Internal class used by {KCLProcess} and {Checkpointer} to communicate
     # with the the {https://github.com/awslabs/amazon-kinesis-client/blob/master/src/main/java/com/amazonaws/services/kinesis/multilang/package-info.java MultiLangDaemon} via the input and output streams.
     class IOProxy
       # @param input [IO, #readline] An `IO`-like object to read input lines from (e.g. `$stdin`).
@@ -29,7 +29,7 @@ module Aws
         @output = output
         @error = error
       end
-  
+
       # Reads one line from the input IO, strips it from any
       # leading/trailing whitespaces, skipping empty lines.
       #
@@ -46,10 +46,10 @@ module Aws
       rescue EOFError
         nil
       end
-  
+
       # Reads a line and decodes it as a message from the {https://github.com/awslabs/amazon-kinesis-client/blob/master/src/main/java/com/amazonaws/services/kinesis/multilang/package-info.java MultiLangDaemon}.
       #
-      # @return [Hash]  A hash representing the contents of the line, e.g. 
+      # @return [Hash]  A hash representing the contents of the line, e.g.
       #   `{"action" => "initialize", "shardId" => "shardId-000001"}`
       def read_action
         line = read_line
@@ -57,21 +57,21 @@ module Aws
           MultiJson.load(line)
         end
       end
-  
-      # Writes a line to the output stream. The line is preceded and followed by a 
-      # new line because other libraries could be writing to the output stream as 
+
+      # Writes a line to the output stream. The line is preceded and followed by a
+      # new line because other libraries could be writing to the output stream as
       # well (e.g. some libs might write debugging info to `$stdout`) so we would
-      # like to prevent our lines from being interlaced with other messages so 
+      # like to prevent our lines from being interlaced with other messages so
       # the MultiLangDaemon can understand them.
       #
-      # @param line [String] A line to write to the output stream, e.g. 
+      # @param line [String] A line to write to the output stream, e.g.
       #   `{"action":"status","responseFor":"<someAction>"}`
       def write_line(line)
         @output.write("\n#{line}\n")
         @output.flush
       end
-  
-  
+
+
       # Writes a line to the error file.
       #
       # @param error [String,Exception] An exception or error message
@@ -82,7 +82,7 @@ module Aws
         @error.write("#{error}\n")
         @error.flush
       end
-  
+
       # Writes a response action to the {https://github.com/awslabs/amazon-kinesis-client/blob/master/src/main/java/com/amazonaws/services/kinesis/multilang/package-info.java MultiLangDaemon},
       # in JSON of the form:
       #   `{"action":"<action>","detail1":"value1",...}`

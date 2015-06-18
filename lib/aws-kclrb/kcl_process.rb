@@ -12,9 +12,6 @@
 #  express or implied. See the License for the specific language governing
 #  permissions and limitations under the License.
 
-require_relative 'io_proxy'
-require_relative 'checkpointer'
-
 module Aws
   module KCLrb
     # Error raised if the {KCLProcess} received an input action that it

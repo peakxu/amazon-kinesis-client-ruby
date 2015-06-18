@@ -12,8 +12,6 @@
 #  express or implied. See the License for the specific language governing
 #  permissions and limitations under the License.
 
-require 'aws/kclrb/io_proxy'
-
 module Aws::KCLrb
   describe IOProxy do
     describe "#read_line" do

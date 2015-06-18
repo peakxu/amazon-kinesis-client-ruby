@@ -13,7 +13,7 @@
 #  express or implied. See the License for the specific language governing
 #  permissions and limitations under the License.
 
-require_relative '../lib/aws/kclrb'
+require 'aws-kclrb'
 require 'base64'
 require 'tmpdir'
 require 'fileutils'
